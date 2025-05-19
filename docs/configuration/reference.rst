@@ -346,13 +346,13 @@ baseva <x>
 global-size <n>G | <n>M | <n>
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-     Set the global memory size, memory shared across all router instances,
-     packet buffers, etc. If not set, defaults to 64M. The input value can be
-     set in GB, MB or bytes.
+    Set the global memory size, memory shared across all router instances,
+    packet buffers, etc. If not set, defaults to 64M. The input value can be
+    set in GB, MB or bytes. Values larger than 4G are supported.
 
 .. code-block:: console
 
-    global-size 2G
+    global-size 5G
 
 global-pvt-heap-size <n>M | size <n>
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -377,12 +377,12 @@ api-pvt-heap-size <n>M | size <n>
 api-size <n>M | <n>G | <n>
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-     Set the size of the API region. If not set, defaults to 16M. The input
-     value can be set in GB, MB or bytes.
+    Set the size of the API region. If not set, defaults to 16M. The input
+    value can be set in GB, MB or bytes. Values larger than 4G are supported.
 
 .. code-block:: console
 
-    api-size 64M
+    api-size 5G
 
 The socksvr Section
 -------------------
