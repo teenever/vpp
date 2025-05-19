@@ -297,12 +297,8 @@ api_segment_config (vlib_main_t * vm, unformat_input_t * input)
 	vl_set_memory_gid (gid);
       else if (unformat (input, "baseva %llx", &baseva))
 	vl_set_global_memory_baseva (baseva);
-      else if (unformat (input, "global-size %lldM", &size))
-	vl_set_global_memory_size (size * (1ULL << 20));
-      else if (unformat (input, "global-size %lldG", &size))
-	vl_set_global_memory_size (size * (1ULL << 30));
-      else if (unformat (input, "global-size %lld", &size))
-	vl_set_global_memory_size (size);
+      else if (unformat (input, "global-size %U", unformat_memory_size, &size))
+        vl_set_global_memory_size (size);
       else if (unformat (input, "global-pvt-heap-size %lldM", &pvt_heap_size))
 	vl_set_global_pvt_heap_size (pvt_heap_size * (1ULL << 20));
       else if (unformat (input, "global-pvt-heap-size size %lld",
@@ -313,12 +309,8 @@ api_segment_config (vlib_main_t * vm, unformat_input_t * input)
       else if (unformat (input, "api-pvt-heap-size size %lld",
 			 &pvt_heap_size))
 	vl_set_api_pvt_heap_size (pvt_heap_size);
-      else if (unformat (input, "api-size %lldM", &size))
-	vl_set_api_memory_size (size * (1ULL << 20));
-      else if (unformat (input, "api-size %lldG", &size))
-	vl_set_api_memory_size (size * (1ULL << 30));
-      else if (unformat (input, "api-size %lld", &size))
-	vl_set_api_memory_size (size);
+      else if (unformat (input, "api-size %U", unformat_memory_size, &size))
+        vl_set_api_memory_size (size);
       else if (unformat (input, "uid %s", &s))
 	{
 	  /* lookup the username */

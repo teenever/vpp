@@ -346,29 +346,33 @@ baseva <x>
 global-size <n>G | <n>M | <n>
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-     Set the global memory size, memory shared across all router instances,
-     packet buffers, etc. If not set, defaults to 64M. The input value can be
-     set in GB, MB or bytes.
+    Set the global memory size, memory shared across all router instances,
+    packet buffers, etc. If not set, defaults to 64M. The input value can be
+    set in GB, MB or bytes. Values larger than 4G are supported.
 
 .. code-block:: console
 
-    global-size 2G
+    global-size 5G
 
 global-pvt-heap-size <n>M | size <n>
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-     Set the size of the global VM private mheap. If not set, defaults to 128k.
-     The input value can be set in MB or bytes.
+    Set the size of the global VM private mheap. If not set, defaults to 128k.
+    The input value can be set in MB or bytes. When ``global-size`` is large
+    this heap must also grow. VPP automatically chooses a suitable size if it
+    is left unset.
 
 .. code-block:: console
 
-    global-pvt-heap-size size 262144
+    global-pvt-heap-size 1M
 
 api-pvt-heap-size <n>M | size <n>
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-     Set the size of the api private mheap. If not set, defaults to 128k.
-     The input value can be set in MB or bytes.
+    Set the size of the api private mheap. If not set, defaults to 128k.
+    The input value can be set in MB or bytes. If ``api-size`` is large the
+    heap must be increased. VPP will compute a reasonable value when this is
+    not specified.
 
 .. code-block:: console
 
@@ -377,12 +381,12 @@ api-pvt-heap-size <n>M | size <n>
 api-size <n>M | <n>G | <n>
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-     Set the size of the API region. If not set, defaults to 16M. The input
-     value can be set in GB, MB or bytes.
+    Set the size of the API region. If not set, defaults to 16M. The input
+    value can be set in GB, MB or bytes. Values larger than 4G are supported.
 
 .. code-block:: console
 
-    api-size 64M
+    api-size 5G
 
 The socksvr Section
 -------------------

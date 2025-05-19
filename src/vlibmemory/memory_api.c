@@ -20,6 +20,12 @@
 #include <vlibapi/api.h>
 #include <vlibmemory/api.h>
 #include <vlibmemory/memory_api.h>
+#include <svm/svm.h>
+#include <svm/svm_common.h>
+
+#define PVT_HEAP_SIZE_FOR_REGION(sz) \
+  (((sz) >> 15) < SVM_PVT_MHEAP_SIZE ? \
+   SVM_PVT_MHEAP_SIZE : (((sz) >> 15) + MMAP_PAGESIZE - 1) & ~(MMAP_PAGESIZE - 1))
 
 #include <vlibmemory/vl_memory_msg_enum.h>	/* enumerate all vlib messages */
 
@@ -1176,8 +1182,8 @@ vlibmemory_init (vlib_main_t * vm)
   a->uid = am->api_uid;
   a->gid = am->api_gid;
   a->pvt_heap_size =
-    (am->global_pvt_heap_size !=
-     0) ? am->global_pvt_heap_size : SVM_PVT_MHEAP_SIZE;
+    (am->global_pvt_heap_size != 0) ?
+    am->global_pvt_heap_size : PVT_HEAP_SIZE_FOR_REGION (a->size);
 
   svm_region_init_args (a);
 
