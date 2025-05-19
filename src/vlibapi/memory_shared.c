@@ -36,6 +36,12 @@
 #include <vlibmemory/memory_api.h>
 #include <vlibmemory/vl_memory_msg_enum.h>
 #include <vlibapi/api_common.h>
+#include <svm/svm.h>
+#include <svm/svm_common.h>
+
+#define PVT_HEAP_SIZE_FOR_REGION(sz) \
+  (((sz) >> 15) < SVM_PVT_MHEAP_SIZE ? \
+   SVM_PVT_MHEAP_SIZE : (((sz) >> 15) + MMAP_PAGESIZE - 1) & ~(MMAP_PAGESIZE - 1))
 
 #define vl_typedefs
 #include <vlibmemory/vl_memory_api_h.h>
@@ -379,6 +385,8 @@ vl_set_global_memory_size (u64 size)
   api_main_t *am = vlibapi_get_main ();
 
   am->global_size = size;
+  if (am->global_pvt_heap_size == 0)
+    am->global_pvt_heap_size = PVT_HEAP_SIZE_FOR_REGION (size);
 }
 
 void
@@ -387,6 +395,8 @@ vl_set_api_memory_size (u64 size)
   api_main_t *am = vlibapi_get_main ();
 
   am->api_size = size;
+  if (am->api_pvt_heap_size == 0)
+    am->api_pvt_heap_size = PVT_HEAP_SIZE_FOR_REGION (size);
 }
 
 void
